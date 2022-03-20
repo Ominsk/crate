@@ -5,11 +5,11 @@ services:
     hostname: neo4j
     container_name: crate-database
     volumes:
-      - ./conf:/conf
-      - ./data:/data
-      - ./import:/import
-      - ./logs:/logs
-      - ./plugins:/plugins
+      - ./db/conf:/conf
+      - ./db/data:/data
+      - ./db/import:/import
+      - ./db/logs:/logs
+      - ./db/plugins:/plugins
     environment:
       - NEO4J_AUTH=neo4j/averysecurepassword
     ports:
