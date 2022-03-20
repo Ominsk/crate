@@ -11,8 +11,7 @@ services:
       - ./logs:/logs
       - ./plugins:/plugins
     environment:
-      - NEO4J_AUTH_USERNAME=neo4j
-      - NEO4J_AUTH_PASSWORD=averysecurepassword
+      - NEO4J_AUTH=neo4j/averysecurepassword
     ports:
         - "7474:7474"
         - "7687:7687"
@@ -29,10 +28,13 @@ services:
     environment:
       - NEO4J_AUTH_USERNAME=neo4j
       - NEO4J_AUTH_PASSWORD=averysecurepassword
+      - DB_SERVER=crate-database
+      - DB_PORT=7687
     depends_on:
       - crate-database
 
 networks:
   spring-cloud-network:
     name: spring-cloud-network
+    driver: bridge
 #    external: true
