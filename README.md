@@ -13,6 +13,8 @@ The credential of the database are passed as environment parameters, e.g.:
 ```shell
 - NEO4J_AUTH_USERNAME=neo4j
 - NEO4J_AUTH_PASSWORD=averysecurepassword
+- DB_SERVER=localhost
+- DB_PORT=7687
 ```
 
 ## Run the application
