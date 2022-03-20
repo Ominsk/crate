@@ -13,6 +13,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO define scheme for login
-		http.authorizeRequests().anyRequest().permitAll();
+		// TODO reanable csrf after login works
+		http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
 	}
 }

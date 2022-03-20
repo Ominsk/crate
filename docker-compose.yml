@@ -1,5 +1,24 @@
 version: "3.9"
 services:
+  crate-database:
+    image: neo4j:latest
+    hostname: neo4j
+    container_name: crate-database
+    volumes:
+      - ./conf:/conf
+      - ./data:/data
+      - ./import:/import
+      - ./logs:/logs
+      - ./plugins:/plugins
+    environment:
+      - NEO4J_AUTH_USERNAME=neo4j
+      - NEO4J_AUTH_PASSWORD=averysecurepassword
+    ports:
+        - "7474:7474"
+        - "7687:7687"
+    networks:
+      - spring-cloud-network
+
   crate:
     container_name: crate-backend
     build: .
@@ -7,6 +26,11 @@ services:
       - 8080:8080
     networks:
       - spring-cloud-network
+    environment:
+      - NEO4J_AUTH_USERNAME=neo4j
+      - NEO4J_AUTH_PASSWORD=averysecurepassword
+    depends_on:
+      - crate-database
 
 networks:
   spring-cloud-network:
