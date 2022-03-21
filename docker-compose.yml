@@ -22,7 +22,7 @@ services:
     container_name: crate-backend
     build: .
     ports:
-      - 8080:8080
+      - "8080:${PORT}"
     networks:
       - spring-cloud-network
     environment:

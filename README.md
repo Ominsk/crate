@@ -1,4 +1,10 @@
-# crate
+# Crate
+![build status](https://github.com/Ominsk/crate/actions/workflows/maven.yaml/badge.svg)
+![Known Vulnerabilities](https://snyk.io/test/github/Ominsk/crate/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ea2c986555a032f25a55/maintainability)](https://codeclimate.com/github/Ominsk/crate/maintainability)
+![Coverage](.github/badges/jacoco.svg)
+![Branches](.github/badges/branches.svg)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ea2c986555a032f25a55/test_coverage)](https://codeclimate.com/github/Ominsk/crate/test_coverage)
 
 Spring Boot project to deepen my knowledge
 
