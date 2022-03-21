@@ -1,9 +1,16 @@
 # Crate
 ![build status](https://github.com/Ominsk/crate/actions/workflows/maven.yaml/badge.svg)
-![Known Vulnerabilities](https://snyk.io/test/github/Ominsk/crate/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/ea2c986555a032f25a55/maintainability)](https://codeclimate.com/github/Ominsk/crate/maintainability)
-![Coverage](.github/badges/jacoco.svg)
-![Branches](.github/badges/branches.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Ominsk_crate&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=Ominsk_crate)
+
 
 Spring Boot project to deepen my knowledge
 
