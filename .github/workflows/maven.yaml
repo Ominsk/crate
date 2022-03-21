@@ -27,7 +27,7 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2.6.1
         with:
           generate-branches-badge: true
-          fail-if-coverage-less-than: 60
+#          fail-if-coverage-less-than: 60
 
       - name: Log coverage percentage
         run: |
