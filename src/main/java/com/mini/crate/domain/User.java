@@ -11,6 +11,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Node
 @Data
@@ -24,7 +25,10 @@ public class User {
 	private String name;
 	private String userName;
 	private String password;
+	private String email;
+	private boolean locked;
+	private boolean enabled;
 
 	@Relationship(type = "HAS_ROLE")
-	private Collection<Role> roles = new ArrayList<>();
+	private Collection<Role> roles = new HashSet<>();
 }

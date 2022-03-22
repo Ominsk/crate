@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mini.crate.domain.Role;
 import com.mini.crate.domain.User;
+import com.mini.crate.security.jwt.JwtUtils;
 import com.mini.crate.services.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserController {
 
 	private final UserService userService;
+	private final JwtUtils jwtUtils;
 
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getUsers() {
@@ -65,39 +67,48 @@ public class UserController {
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			try {
 				String refreshToken = authorizationHeader.substring("Bearer ".length());
-				Algorithm algorithm = Algorithm.HMAC256("secret".getBytes(StandardCharsets.UTF_8));
-				JWTVerifier verifier = JWT.require(algorithm).build();
-				DecodedJWT jwt = verifier.verify(refreshToken);
+				DecodedJWT jwt = jwtUtils.decodeJwtToken(refreshToken);
+
 				String username = jwt.getSubject();
 				User user = userService.getUser(username);
 
-				String accessToken = JWT.create()
-						.withSubject(user.getUserName())
-						.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-						.withIssuer(request.getRequestURL().toString())
-						.withClaim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
-						.sign(algorithm);
+				String accessToken = jwtUtils.encodeToken(
+						user.getUserName(),
+						new Date(System.currentTimeMillis() + 10 * 60 * 1000),
+						request.getRequestURL().toString(),
+						user.getRoles().stream().map(Role::getName).collect(Collectors.toList())
+				);
 
-				Map<String, String> tokens  = new HashMap<>();
+
+				Map<String, String> tokens = new HashMap<>();
 				tokens.put("access_token", accessToken);
 				tokens.put("refresh_token", refreshToken);
+				tokens.put("path", request.getServletPath());
 
 				response.setContentType(APPLICATION_JSON_VALUE);
 				new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
 			} catch (Exception exception) {
-				response.setHeader("error", exception.getMessage());
-				response.setStatus(FORBIDDEN.value());
-				Map<String, String> error  = new HashMap<>();
-				error.put("error_message", exception.getMessage());
-
-				response.setContentType(APPLICATION_JSON_VALUE);
-				new ObjectMapper().writeValue(response.getOutputStream(), error);
+				createErrorResponse(request, response, exception);
 			}
 		} else {
 			throw new RuntimeException("Refresh token is missing");
 		}
 
+	}
+
+	public static void createErrorResponse(HttpServletRequest request, HttpServletResponse response, Exception exception) throws IOException {
+		response.setHeader("error", exception.getMessage());
+		response.setStatus(FORBIDDEN.value());
+		response.setContentType(APPLICATION_JSON_VALUE);
+
+		final Map<String, Object> error = new HashMap<>();
+		error.put("status", FORBIDDEN);
+		error.put("error", "FORBIDDEN");
+		error.put("message", exception.getMessage());
+		error.put("path", request.getServletPath());
+
+		new ObjectMapper().writeValue(response.getOutputStream(), error);
 	}
 }
 

@@ -31,6 +31,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public User save(User user) {
 		log.info("Saving user {} to database", user.getUserName());
+		// TODO check if username does not already exists
+		// TODO check email does not already exists
+		// TODO check if password is valid
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepo.save(user);
 	}
@@ -46,7 +49,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public void addRoleToUser(String userName, String roleName) {
 		log.info("Adding role {} to user {}", roleName, userName);
 
-		User user = userRepo.findUserByUserName(userName);
+		User user = getUser(userName);
 		Role role = roleRepo.findRoleByName(roleName);
 
 		user.getRoles().add(role);
@@ -57,7 +60,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User getUser(String userName) {
 		log.info("Fetch user {}", userName);
 
-		return userRepo.findUserByUserName(userName);
+		return userRepo.findUserByUserName(userName).orElseThrow(() -> new UsernameNotFoundException("User " + userName + " not found"));
 	}
 
 	@Override
@@ -76,16 +79,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepo.findUserByUserName(username);
-		if (user == null) {
-			log.error("User not find");
-			throw new UsernameNotFoundException("User " + username + " not found");
-		} else {
-			log.info("User {} found", username);
-		}
+		User user = userRepo.findUserByUserName(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
+
 
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
 		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), authorities);
 	}
+
 }

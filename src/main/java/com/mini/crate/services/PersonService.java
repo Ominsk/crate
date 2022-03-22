@@ -3,16 +3,16 @@ package com.mini.crate.services;
 import com.mini.crate.models.Person;
 import com.mini.crate.repositories.PersonRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PersonService {
 
 	PersonRepository personRepository;
-
 
 
 	public List<Person> getAll() {

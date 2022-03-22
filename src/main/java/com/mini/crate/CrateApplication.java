@@ -35,10 +35,10 @@ public class CrateApplication {
 			userService.saveRole(Role.builder().name("ROLE_ADMIN").build());
 			userService.saveRole(Role.builder().name("ROLE_SUPER_ADMIN").build());
 
-			userService.save(User.builder().name("John Travolta").userName("john").password("1234").build());
-			userService.save(User.builder().name("Will Smith").userName("will").password("abcd").build());
-			userService.save(User.builder().name("Jim Carry").userName("jim").password("1234").build());
-			userService.save(User.builder().name("Arnold Scwarzenegger").userName("arnold").password("1234").build());
+			userService.save(User.builder().name("John Travolta").email("").userName("john").password("1234").build());
+			userService.save(User.builder().name("Will Smith").email("").userName("will").password("abcd").build());
+			userService.save(User.builder().name("Jim Carry").email("").userName("jim").password("1234").build());
+			userService.save(User.builder().name("Arnold Scwarzenegger").email("").userName("arnold").password("1234").build());
 
 			userService.addRoleToUser("john", "ROLE_USER");
 			userService.addRoleToUser("john", "ROLE_MANAGER");
